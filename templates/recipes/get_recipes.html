@@ -1,0 +1,17 @@
+<!-- templates/show_recipe_details.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Показать подробности рецепта</title>
+</head>
+<body>
+    <h1>Показать подробности рецепта</h1>
+    <p>Рецепт: {{ recipe.name }}</p>
+    <ul>
+        {% for product_in_recipe in products_in_recipe %}
+            <li>{{ product_in_recipe.product.name }} - {{ product_in_recipe.weight }}g</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить продукт в рецепт</title>
+</head>
+<body>
+    <h1>Добавить продукт в рецепт</h1>
+    <form method="post" action="{% url 'add_product_to_recipe' %}">
+        {% csrf_token %}
+        <label for="id_recipe">Recipe:</label>
+        {{ form.recipe }}
+        <br>
+        <label for="id_product">Product:</label>
+        {{ form.product }}
+        <br>
+        <label for="id_weight">Weight:</label>
+        {{ form.weight }}
+        <br>
+        <button type="submit">Добавить товар</button>
+    </form>
+    <br>
+</body>
+</html>
