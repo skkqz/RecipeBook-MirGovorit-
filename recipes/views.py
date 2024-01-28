@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
@@ -42,10 +43,7 @@ class AddProductToRecipeView(generic.FormView):
         product = form.cleaned_data['product']
         weight = form.cleaned_data['weight']
 
-        recipe_product = RecipeProduct.objects.get_or_create(recipe=recipe, product=product)[0]
-        if recipe_product:
-            recipe_product.weight = weight
-            recipe_product.save()
+        RecipeProduct.objects.update_or_create(recipe=recipe, product=product, defaults={'weight': weight})
 
         return super().form_valid(form)
 
@@ -71,8 +69,7 @@ class CookRecipeView(generic.TemplateView):
 
         with transaction.atomic():
             for recipe_product in recipe.recipeproduct_set.all():
-                recipe_product.product.prepared_foods += 1
-                recipe_product.product.save()
+                Product.objects.filter(pk=recipe_product.product.pk).update(prepared_foods=F('prepared_foods') + 1)
 
         return redirect('cook_recipe')
 
